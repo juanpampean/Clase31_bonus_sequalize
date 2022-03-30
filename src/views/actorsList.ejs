@@ -17,7 +17,10 @@
     <ul>
         <% for( let i = 0; i < actors.length; i++ ) { %>
         <li>
-            <a href="/actors/detail/<%= actors[i].id %>"><%= actors[i].last_name+","+actors[i].first_name %></a>
+            <a href="/actors/detail/<%= actors[i].id %>">
+                <% if (actors[i].peliFav){ %>
+                <%= actors[i].last_name+","+actors[i].first_name %> - <a>Pelicula Favorita: <%= actors[i].peliFav.title %></a>
+                <% } %></a>
         </li>
         <% } %>
 

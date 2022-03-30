@@ -15,6 +15,9 @@ module.exports = (sequelize, dataTypes) => {
         rating: {
             type: dataTypes.INTEGER
         },
+        favorite_movie_id :{
+            type: dataTypes.INTEGER
+        }
 
     };
     let config = {
@@ -22,6 +25,13 @@ module.exports = (sequelize, dataTypes) => {
         timestamps: false
     };
     const Actor = sequelize.define(alias, cols, config)
+
+    Actor.associate = function(models) {
+        Actor.belongsTo(models.Movie,{
+            as:"peliFav",
+            foreignKey:"favorite_movie_id"
+        })
+    }
 
     return Actor
 }

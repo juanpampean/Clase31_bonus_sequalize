@@ -28,5 +28,14 @@ module.exports = (sequelize, dataTypes) => {
     };
     const Movie = sequelize.define(alias, cols, config)
 
+    Movie.associate = function(models) {
+        Movie.hasMany(models.Actor,{
+            as:"actors",
+            foreignKey:"favorite_movie_id"
+        })
+    }
+
+
+
     return Movie
 }

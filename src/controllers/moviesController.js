@@ -1,5 +1,6 @@
 const db = require('../database/models');
 const sequelize = db.sequelize;
+const { validationResult } = require('express-validator')
 
 
 const moviesController = {
@@ -42,7 +43,11 @@ const moviesController = {
     'add': function (req, res) {
             res.render('moviesAdd.ejs');
           },
-        create: function (req, res){
+    'create': function (req, res){
+            const errors = validationResult(req);
+            if (errors.errors.length > 0){
+              res.render("moviesAdd.ejs",{errors: errors.mapped(errors)})}
+            else {
             db.Movie.create({
               title: req.body.title, 
               rating: req.body.rating,
@@ -51,8 +56,8 @@ const moviesController = {
               length: req.body.length,
               genre_id: req.body.genre_id
             })
-            res.redirect('/movies');
-          },
+            res.redirect('/movies')}},
+          
      'edit': function(req, res) {
         db.Movie.findByPk(req.params.id)
           .then(movie => {
